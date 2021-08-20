@@ -1,0 +1,50 @@
+<!doctype html>
+<html>
+
+<!-- Titulo de la página-->
+<head>
+    <title>Registro</title>
+    <script>
+        const p = document.getElementById("1");
+        p.onclick() = mostrarAlerta;
+        function mostrarAlerta(){
+            alert("Base de datos Regenerada!");
+            }
+    </script>
+</head>
+
+<body>
+
+<h2>Localidades</h2>
+
+<p>Esta aplicación mantiene el registro de las localidades ingresadas en la base de datos.</p>
+
+<table border="1">
+    <thead cellpadding="1.0" cellspacing="1.0">
+        <tr>
+            <th>Localidad</th>            
+            <th>Precio_min</th>
+            <th>Precio_max</th>
+        </tr>
+        {% for row in data %}
+        <tr>
+            <td>{{row['Localidad']}}</td> 
+            <td>{{row['Price_min']}}</td>
+            <td>{{row['Price_max']}}</td>
+        </tr>
+        {% endfor %}
+    </thead>
+</table>
+
+<br><br>
+
+
+<form action="{{url_for('meli')}}">
+    <input type="submit" value="Agregar Busqueda"/>
+</form>
+<form action="{{url_for('reset')}}">
+    <input id= "1" type="submit" value="Resetear Base de Datos" onclick="mostrarAlerta()"/>
+</form>
+
+</body>
+</html>

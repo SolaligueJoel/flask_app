@@ -1,0 +1,35 @@
+<!doctype html>
+<html>
+
+<!-- Titulo de la página-->
+<head>
+    <title>Registro</title>
+</head>
+
+<body>
+
+<h1>MELI App</h1>
+
+<h2>Haremos uso de la API pública de mercadolibre para analizar</h2> 
+<h2>alquileres y departamentos segun su localidad y precios obtenidos por el usuario</h2>
+<p>Una vez obtenidos los datos, graficaremos todos aquellos departamentos que se encuentren</p>
+<p>por debajo del precio minimo, los que esten entre el precio minimo y maximo, y por ultimo</p>
+<p>mostraremos todos aquellos departamentos que superen el precio maximo.</p>
+
+<form method = "POST" action="{{url_for('meli')}}">
+  <label>Localidad:</label><br>
+  <input type="location" name="location"><br>
+  <label>Precio minimo:</label><br>
+  <input type="price_min" name="price_min"><br>
+  <label>Precio maximo:</label><br>
+  <input type="price_max" name="price_max"><br>
+  <input type="submit" value="Buscar y Graficar">
+</form> 
+
+
+<form method = "GET" action="{{url_for('registro')}}">
+  <input type="submit" value="Mostrar datos buscados">
+</form>
+
+</body>
+</html>
