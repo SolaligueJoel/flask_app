@@ -1,0 +1,28 @@
+<!doctype html>
+<html>
+
+<!-- Titulo de la página-->
+<head>
+    <title>Grafico</title>
+</head>
+
+<body>
+
+<h1>MELI App</h1>
+
+<img id="overview_img" src="">
+<script>
+    data = "{{overview_graph}}"
+    data = data.replace("b&#39;", "") // quitar primer corchete
+    data = data.replace("&#39;", "")  // quitar ùltimo bracecode
+    document.getElementById("overview_img").src = "data:image/png;base64," + data;
+</script>
+
+<form action="{{url_for('meli')}}">
+    <input type="submit" value="Ir a inicio"/>
+</form>
+<form method = "GET" action="{{url_for('registro')}}">
+    <input type="submit" value="Mostrar datos buscados">
+</form>
+</body>
+</html>

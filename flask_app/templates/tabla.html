@@ -25,12 +25,14 @@
             <th>Localidad</th>            
             <th>Precio_min</th>
             <th>Precio_max</th>
+            <th>Horario</th>
         </tr>
         {% for row in data %}
         <tr>
             <td>{{row['Localidad']}}</td> 
             <td>{{row['Price_min']}}</td>
             <td>{{row['Price_max']}}</td>
+            <td>{{row['Time']}}</td>
         </tr>
         {% endfor %}
     </thead>

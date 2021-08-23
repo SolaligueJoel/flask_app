@@ -1,7 +1,4 @@
-from re import L
-import sqlalchemy
 from flask.wrappers import Response
-
 from sqlalchemy import Column, Integer, String, ForeignKey, DateTime
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import query, sessionmaker, relationship
@@ -14,7 +11,6 @@ from datetime import datetime
 from flask_sqlalchemy import SQLAlchemy
 
 
-import json
 from time import gmtime, strftime
 import requests
 import matplotlib.pyplot as plt
@@ -87,7 +83,7 @@ def report(limit=0, offset=0):
     # TIP --> la clase Persona podría tener una función
     # para pasar a JSON/diccionario
     for person in query:
-        json_result = {'Localidad': person.location,'Price_min': person.price_min, 'Price_max': person.price_max}
+        json_result = {'Localidad': person.location,'Price_min': person.price_min, 'Price_max': person.price_max, 'Time':person.time}
         json_result_list.append(json_result)
 
     return json_result_list
@@ -95,7 +91,7 @@ def report(limit=0, offset=0):
 def grafico(data,location): 
 
     #Pie Plot
-    fig = Figure(figsize=(15,8))
+    fig = Figure(figsize=(10,5))
     fig.tight_layout()
     ax = fig.add_subplot()
     ax.set_title('Cantidad Alquileres en {}'.format(location),fontsize=27)
@@ -106,10 +102,12 @@ def grafico(data,location):
 
     ax.set_xlim(0,10)
     ax.pie(data,labels= label, wedgeprops={'edgecolor':'black'}, autopct='%0.0f%%', colors=colors)
-    ax.legend(label2,loc=1,fontsize=11)
+    ax.legend(label2,loc=1,fontsize=8)
     ax.axis('equal')
     output = io.BytesIO()
     FigureCanvas(fig).print_png(output)
-    
-    return Response(output.getvalue(),mimetype='image/png')
+    encoded_img = base64.encodebytes(output.getvalue())
+    plt.close(fig)
+    return encoded_img
+    #return Response(output.getvalue(),mimetype='image/png')
     

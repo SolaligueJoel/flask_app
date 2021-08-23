@@ -1,10 +1,11 @@
 import traceback
 from datetime import datetime
 from flask_sqlalchemy import SQLAlchemy
-from flask import Flask, request, jsonify, render_template, Response, redirect, url_for
+from flask import Flask, request, jsonify, render_template, Response
 from config import config
 import os
 import localidad
+import pytz
 
 
 
@@ -58,7 +59,7 @@ def meli():
             return jsonify({'trice': traceback.format_exc()})
     if request.method == 'POST':
         try:
-            time1 = datetime.now()
+            time1 = datetime.now(pytz.timezone('America/Argentina/Buenos_Aires'))
             time = time1.strftime('%d/%m/%Y, %H:%M')
             location = str(request.form.get('location'))
             price_min = str(request.form.get('price_min'))
@@ -71,12 +72,15 @@ def meli():
             max = int(price_max)
             dataset = localidad.fetch(location)
             data = localidad.transform(dataset,min,max)
-            return localidad.grafico(data,location)
+            encoded_img = localidad.grafico(data,location)
+            return render_template('grafico.html',overview_graph=encoded_img)
            
         except:
             return jsonify({'trace': traceback.format_exc()})
+
+
+    
         
-          
 
 if __name__ == '__main__':
     app.run(host=server_config['host'],
